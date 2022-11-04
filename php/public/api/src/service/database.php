@@ -66,10 +66,10 @@ class Database {
 
     private function connect(){
         $user = "root";    
-        $dbName  = "buzzvel";
-        $password = "123456";
-        $host = "database";
-        $port = "3306";
+        $dbName  = "virtual_card";
+        $password = $_ENV['MYSQL_ROOT_PASSWORD'];
+        $host = $_ENV['MYSQL_HOST'];
+        $port = $_ENV['MYSQL_PORT'];
        
         $connection = "mysql:host={$host};port={$port};dbname={$dbName};charset=utf8";  
         

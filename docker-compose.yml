@@ -51,6 +51,10 @@ services:
       - ./php/public:/public
       - /public/api/vendor
       - ./php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    environment:
+      MYSQL_ROOT_PASSWORD: "$MYSQL_ROOT_PASSWORD"
+      MYSQL_HOST: "$MYSQL_HOST"
+      MYSQL_PORT: "$MYSQL_PORT"
     expose:
       - 9000
     networks:
