@@ -1,4 +1,16 @@
-FROM php:7.4-fpm-alpine
+FROM composer:2.4 as builder
+
+WORKDIR /app
+
+COPY public/api/ .
+
+RUN composer install
+
+FROM php:8-fpm-alpine
+
+WORKDIR /public
+
+COPY --from=builder /app/vendor/ /public/api/vendor
 
 RUN apk add --update icu-dev \ 
 && apk add libzip-dev \
@@ -9,10 +21,3 @@ libpng-dev jpeg-dev freetype-dev \
 && pecl install xdebug \
 && docker-php-ext-enable zip pdo pdo_mysql xdebug gd \
 && apk del pcre-dev ${PHPIZE_DEPS}
-
-COPY public/api api 
-
-RUN cd api && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-&& php composer-setup.php \
-&& php -r "unlink('composer-setup.php');" \
-&& php composer.phar install
