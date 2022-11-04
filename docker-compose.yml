@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+
+  web:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./php/public:/public
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - buzzvelnetwork
+
+  database:
+    container_name: database
+    build: 
+      context: ./database
+    restart: always
+    volumes:
+      - ./database/container:/var/lib/mysql
+      - ./database:/database
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "$MYSQL_ROOT_PASSWORD"
+    networks:
+      - buzzvelnetwork
+
+  frontend:
+    container_name: frontend
+    build: 
+      context: ./frontend
+    stdin_open: true
+    volumes:
+      - ./frontend:/application
+      - /application/node_modules
+    ports:
+      - 3000:3000
+    env_file:
+      - ./frontend/.env
+    environment:
+      REACT_APP_API_URL: "$REACT_APP_API_URL"
+    networks:
+      - buzzvelnetwork
+
+  php:
+    container_name: php
+    build: ./php/
+    volumes:
+      - ./php/public:/public
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    expose:
+      - 9000
+    networks:
+      - buzzvelnetwork
+
+networks:
+  buzzvelnetwork:
+
+
+
+

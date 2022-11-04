@@ -1,0 +1,4 @@
+frontend/node_modules
+database/container
+php/public/composer.phar
+php/public/api/vendor
