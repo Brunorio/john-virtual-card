@@ -30,6 +30,6 @@ The above command is needed to upload the docker containers and populate the dat
      - `php` - Backend using PHP in version 7.4
      - `nginx` - nginx server to handle reverse-proxy
 
-After up container, access the address in your browser:
+After up container, access the address in your browser (Prefer to use Google Chrome without adblock):
 - `http://app.localhost` - UI
 - `http://api.localhost` - Restful API for data manipulation
