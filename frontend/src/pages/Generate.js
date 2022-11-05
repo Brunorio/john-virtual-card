@@ -3,13 +3,17 @@ import axios from "axios";
 
 export default function Generate() {
     const [loading, setLoading] = useState(false);
-    const [ user, setUser ] = useState({});
+    const [ user, setUser ] = useState({
+        name: "",
+        linkedin: "",
+        github: ""
+    });
 
     const handleInputChange = (index, value) => {
-        setUser(current => {
-            current[index] = value;
-            return current; 
-        });
+        var _user = {...user};
+        _user[index] = value;
+        
+        setUser(_user);
     }
 
     const downloadImage = (image, name) => {
